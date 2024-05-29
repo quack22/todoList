@@ -6,19 +6,26 @@ interface ITodo {
     status: boolean
 }
 
-const todos = ref<ITodo[]>([])
+const todoStore = useTodoStore();
+
+const { getTodo } = todoStore
+const { todos } = storeToRefs(todoStore)
+
+// const todos = ref<ITodo[]>([])
 const newTodo = ref<string>('')
+
+await getTodo()
 
 const addTodo = () => {
     if (newTodo.value.trim() !== '') {
-        todos.value.push({ title: newTodo.value, status: false })
+        // todos.value.push({ title: newTodo.value, status: false })
 
         newTodo.value = ''
     }
 }
 
 const removeTodo = (index: number) => {
-    todos.value.splice(index, 1)
+    // todos.value.splice(index, 1)
 }
 
 </script>
@@ -46,7 +53,7 @@ const removeTodo = (index: number) => {
                 <input v-model="todo.status" type="checkbox">
                 <span :class="{ 'line-through': todo.status }">{{ todo.title }}</span>
             </div>
-            <button @click="removeTodo(index)">Hapus</button>
+            <button class="p-1 bg-red-600 text-white rounded-sm" @click="removeTodo(index)">Hapus</button>
         </div>
     </div>
 </template>
